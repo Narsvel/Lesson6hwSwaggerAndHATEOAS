@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity  //сущность
 @Table(name = "Users") //указываем соостветствие класса и таблици
@@ -97,4 +98,20 @@ public class User {
                 "} \n";
     }
 
+    @Override
+    public final boolean equals(Object object) {
+        if (!(object instanceof User user)) return false;
+
+        return id == user.id && age == user.age && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(createAt, user.createAt);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + Objects.hashCode(name);
+        result = 31 * result + Objects.hashCode(email);
+        result = 31 * result + age;
+        result = 31 * result + Objects.hashCode(createAt);
+        return result;
+    }
 }

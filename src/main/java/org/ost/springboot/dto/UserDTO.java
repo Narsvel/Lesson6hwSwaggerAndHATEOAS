@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.Objects;
+
 public class UserDTO {
 
     private int id;
@@ -19,6 +21,17 @@ public class UserDTO {
 
     @Min(value = 0, message = "Age should be greater than 0.")
     private int age;
+
+    public UserDTO() {
+
+    }
+
+    public UserDTO(int id, String name, String email, int age) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
 
     public String getName() {
         return name;
@@ -50,5 +63,31 @@ public class UserDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public final boolean equals(Object object) {
+        if (!(object instanceof UserDTO userDTO)) return false;
+
+        return id == userDTO.id && age == userDTO.age && Objects.equals(name, userDTO.name) && Objects.equals(email, userDTO.email);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + Objects.hashCode(name);
+        result = 31 * result + Objects.hashCode(email);
+        result = 31 * result + age;
+        return result;
     }
 }
