@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true) //все методы внутри класса будут Transactional только чтение
+@Transactional(readOnly = true) //все методы внутри класса будут по default Transactional только чтение
 public class UsersService {
 
     private final UsersRepository usersRepository;
@@ -27,7 +27,7 @@ public class UsersService {
         return foundUser.orElse(null);
     }
 
-    @Transactional
+    @Transactional //т.к. метод не только читает данные, указываем аннотация Transactional, кторая заменит аннотицию класса
     public void save(User user) {
         usersRepository.save(user);
     }
