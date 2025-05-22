@@ -36,6 +36,8 @@ public class UsersService {
     @Transactional
     public User update(int id, User updateUser) {
         Optional<User> foundUser = usersRepository.findById(id);
+        if (foundUser.isEmpty())
+            throw new UserNotFoundException();
         foundUser.ifPresent(user -> updateUser.setCreateAt(user.getCreateAt()));
         updateUser.setId(id);
         return usersRepository.save(updateUser);
